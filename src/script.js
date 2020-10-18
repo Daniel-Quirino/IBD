@@ -43,4 +43,16 @@ insert_into_BD = todos_objetos_historicos.reduce(function(acumulador, valorAtual
   return acumulador + `INSERT INTO OBJETOS_HISTORICOS (CODIGO, TITULO) VALUES (${valorAtual.codigo}, "${valorAtual.titulo}"); \n`;
 }, '');
 
-writeSQLFile('objetosHistoricos', insert_into_BD);
+// Situações
+const situacoes = dataInJSON.map(obj => {
+  return obj.situacao
+});
+
+const diferentesSituacoes = [...new Set(situacoes)];
+
+insert_into_BD = diferentesSituacoes.reduce(function(acumulador, valorAtual, index) {
+  return acumulador + `INSERT INTO SITUACOES (CODIGO, SITUACAO) VALUES (${index}, "${valorAtual}"); \n`;
+}, '');
+
+
+writeSQLFile('situacoes', insert_into_BD);
