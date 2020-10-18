@@ -8,6 +8,17 @@ const writeSQLFile = (file, insertIntoSQL) => {
   });
 }
 
+const removeAccent = (text) => {
+    text = text.toLowerCase();                                                         
+    text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+    text = text.replace(new RegExp('[Ç]','gi'), 'c');
+    return text;                 
+}
+
 let dataInJSON = require("./data/dadosJSON.js");
 
 // Criar Tabela de Estado de Conservação
@@ -40,7 +51,7 @@ const todos_objetos_historicos = dataInJSON.map(obj => {
 });
 
 insert_into_BD = todos_objetos_historicos.reduce(function(acumulador, valorAtual) {
-  return acumulador + `INSERT INTO OBJETOS_HISTORICOS (CODIGO, TITULO) VALUES (${valorAtual.codigo}, "${valorAtual.titulo}"); \n`;
+  return acumulador + `INSERT INTO OBJETOS_HISTORICOS (CODIGO, TITULO) VALUES (${valorAtual.codigo}, "${removeAccent(valorAtual.titulo)}"); \n`;
 }, '');
 
 writeSQLFile('objetosHistoricos', insert_into_BD);
