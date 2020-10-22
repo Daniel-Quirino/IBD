@@ -56,3 +56,18 @@ insert_into_BD = diferentesSituacoes.reduce(function(acumulador, valorAtual, ind
 
 
 writeSQLFile('situacoes', insert_into_BD);
+
+
+// Unidadeses
+const unidades = dataInJSON.map(obj => {
+  return obj.unidade
+});
+
+const diferentesUnidades = [...new Set(unidades)];
+
+insert_into_BD = diferentesUnidades.reduce(function(acumulador, valorAtual, index) {
+  return acumulador + `INSERT INTO UNIDADES (CODIGO, UNIDADE) VALUES (${index}, "${valorAtual}"); \n`;
+}, '');
+
+
+writeSQLFile('unidades', insert_into_BD);
