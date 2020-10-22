@@ -58,7 +58,7 @@ insert_into_BD = diferentesSituacoes.reduce(function(acumulador, valorAtual, ind
 writeSQLFile('situacoes', insert_into_BD);
 
 
-// Unidadeses
+// Unidades
 const unidades = dataInJSON.map(obj => {
   return obj.unidade
 });
@@ -71,3 +71,18 @@ insert_into_BD = diferentesUnidades.reduce(function(acumulador, valorAtual, inde
 
 
 writeSQLFile('unidades', insert_into_BD);
+
+
+// Tipologias
+const tipologias = dataInJSON.map(obj => {
+  return obj.tipologia
+});
+
+const diferentesTipologias = [...new Set(tipologias)];
+
+insert_into_BD = diferentesTipologias.reduce(function(acumulador, valorAtual, index) {
+  return acumulador + `INSERT INTO TIPOLOGIAS (CODIGO, TIPOLOGIA) VALUES (${index}, "${valorAtual}"); \n`;
+}, '');
+
+
+writeSQLFile('tipologias', insert_into_BD);
