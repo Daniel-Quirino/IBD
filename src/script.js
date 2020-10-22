@@ -44,7 +44,7 @@ insert_into_BD = todos_objetos_historicos.reduce(function(acumulador, valorAtual
   return acumulador + `INSERT INTO OBJETOS_HISTORICOS (CODIGO, TITULO, INFORMACAO) VALUES (${valorAtual.codigo}, "${valorAtual.titulo}", "${valorAtual.informacao}"); \n`;
 }, '');
 
-writeSQLFile('objetosHistoricos',insert_into_BD);
+// writeSQLFile('objetosHistoricos',insert_into_BD);
 
 // Situações
 const situacoes = dataInJSON.map(obj => {
@@ -110,19 +110,46 @@ writeSQLFile('colecoes', insert_into_BD);
 
 // Detalhes
 
-
-const model = {
-  "codigo": 1719,
-  "titulo": "ARTE",
-  "subtitulo": "",
-  "informacao": "Cartão, medindo 14 x 18 cm, produzido nos anos de 80. CARLOS ECHEVERRY",
-  "unidade": "Núcleo de Arte e Cultura",
-  "estado_conservacao": "BOM",
-  "situacao": "EM_ACERVO",
-  "numero_tombamento": "",
-  "colecao": "Arte Correio",
-  "subcolecao": "",
-  "tipologia": "Cartão",
-  "cedido_a": "",
-  "data_limite_cessao": ""
+const obterCodigo = (valor, lista) => {
+  return lista.indexOf(valor);
 }
+
+
+
+const detalhes = dataInJSON.map(obj => {
+  return {
+    "codigo": obj.codigo,
+    "unidade": obj.unidade,
+    "estado_conservacao": obj.estado_conservacao,
+    "situacao": obj.situacao,
+    "colecao": obj.colecao,
+    "tipologia": obj.tipologia,
+  }
+});
+
+
+insert_into_BD = detalhes.reduce(function(acumulador, valorAtual, index) {
+  return (
+    acumulador + 
+      `INSERT INTO COLECOES (
+        CODIGO, 
+        ESTADO_DE_CONSERVACAO,
+        SITUACAO,
+        UNIDADE,
+        COLECAO,
+        TIPOLOGIA
+      ) 
+      VALUES (
+        ${valorAtual.codigo}, 
+        ${obterCodigo(valorAtual.estado_conservacao, estado_conservacao)}, 
+        ${obterCodigo(valorAtual.situacao, situacoes)}, 
+        ${obterCodigo(valorAtual.unidade, unidades)},
+        ${obterCodigo(valorAtual.colecao, colecoes)},
+        ${obterCodigo(valorAtual.tipologia, tipologias)}
+      ); \n`
+  )
+
+  }, '');
+
+
+  writeSQLFile('detalhes', insert_into_BD);
