@@ -15,3 +15,4 @@ INSERT INTO COLECOES (CODIGO, COLECAO) VALUES (13, "Não Definida");
 INSERT INTO COLECOES (CODIGO, COLECAO) VALUES (14, "O futebol Mossoroense"); 
 INSERT INTO COLECOES (CODIGO, COLECAO) VALUES (15, "Projetos do Município de Passa e Fica/RN"); 
 INSERT INTO COLECOES (CODIGO, COLECAO) VALUES (16, "Registros do Vôleibol no Rio Grande do Norte"); 
+

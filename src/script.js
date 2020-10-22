@@ -35,13 +35,16 @@ writeSQLFile('estadoDeConservacao',insert_into_BD);
 const todos_objetos_historicos = dataInJSON.map(obj => {
   return ({
       titulo: obj.titulo,
-      codigo: obj.codigo
+      codigo: obj.codigo,
+      informacao: obj.informacao
   })
 });
 
 insert_into_BD = todos_objetos_historicos.reduce(function(acumulador, valorAtual) {
-  return acumulador + `INSERT INTO OBJETOS_HISTORICOS (CODIGO, TITULO) VALUES (${valorAtual.codigo}, "${valorAtual.titulo}"); \n`;
+  return acumulador + `INSERT INTO OBJETOS_HISTORICOS (CODIGO, TITULO, INFORMACAO) VALUES (${valorAtual.codigo}, "${valorAtual.titulo}", "${valorAtual.informacao}"); \n`;
 }, '');
+
+writeSQLFile('objetosHistoricos',insert_into_BD);
 
 // Situações
 const situacoes = dataInJSON.map(obj => {
@@ -101,3 +104,25 @@ insert_into_BD = diferentesColecoes.reduce(function(acumulador, valorAtual, inde
 
 
 writeSQLFile('colecoes', insert_into_BD);
+
+
+
+
+// Detalhes
+
+
+const model = {
+  "codigo": 1719,
+  "titulo": "ARTE",
+  "subtitulo": "",
+  "informacao": "Cartão, medindo 14 x 18 cm, produzido nos anos de 80. CARLOS ECHEVERRY",
+  "unidade": "Núcleo de Arte e Cultura",
+  "estado_conservacao": "BOM",
+  "situacao": "EM_ACERVO",
+  "numero_tombamento": "",
+  "colecao": "Arte Correio",
+  "subcolecao": "",
+  "tipologia": "Cartão",
+  "cedido_a": "",
+  "data_limite_cessao": ""
+}
