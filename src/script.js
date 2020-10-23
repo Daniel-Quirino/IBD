@@ -25,7 +25,7 @@ const obj_estado_conservacao = estado_conservacao.map((estado, index) => {
 })
 
 let insert_into_BD = obj_estado_conservacao.reduce(function(acumulador, valorAtual) {
-  return acumulador + `INSERT INTO ESTADO_DE_CONSERVACAO (COD_ESTADO, NOME_ESTADO) VALUES (${valorAtual.index}, "${valorAtual.estado}"); \n`;
+  return acumulador + `INSERT INTO ESTADO_DE_CONSERVACAO (CODIGO, NOME_ESTADO) VALUES (${valorAtual.index}, "${valorAtual.estado}"); \n`;
 }, '');
 
 writeSQLFile('estadoDeConservacao',insert_into_BD);
@@ -131,25 +131,10 @@ const detalhes = dataInJSON.map(obj => {
 insert_into_BD = detalhes.reduce(function(acumulador, valorAtual, index) {
   return (
     acumulador + 
-      `INSERT INTO COLECOES (
-        CODIGO, 
-        ESTADO_DE_CONSERVACAO,
-        SITUACAO,
-        UNIDADE,
-        COLECAO,
-        TIPOLOGIA
-      ) 
-      VALUES (
-        ${valorAtual.codigo}, 
-        ${obterCodigo(valorAtual.estado_conservacao, estado_conservacao)}, 
-        ${obterCodigo(valorAtual.situacao, situacoes)}, 
-        ${obterCodigo(valorAtual.unidade, unidades)},
-        ${obterCodigo(valorAtual.colecao, colecoes)},
-        ${obterCodigo(valorAtual.tipologia, tipologias)}
-      ); \n`
-  )
-
-  }, '');
+      `INSERT INTO COLECOES ( CODIGO, ESTADO_DE_CONSERVACAO, SITUACAO, UNIDADE, COLECAO, TIPOLOGIA ) 
+      VALUES ( ${valorAtual.codigo}, ${obterCodigo(valorAtual.estado_conservacao, estado_conservacao)}, ${obterCodigo(valorAtual.situacao, situacoes)}, ${obterCodigo(valorAtual.unidade, unidades)}, ${obterCodigo(valorAtual.colecao, colecoes)}, ${obterCodigo(valorAtual.tipologia, tipologias)}); \n`
+    )
+}, '');
 
 
-  writeSQLFile('detalhes', insert_into_BD);
+writeSQLFile('detalhes', insert_into_BD);
