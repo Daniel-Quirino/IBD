@@ -128,7 +128,7 @@ const detalhes = dataInJSON.map(obj => {
 });
 
 
-insert_into_BD = detalhes.reduce(function(acumulador, valorAtual, index) {
+insert_into_BD = detalhes.reduce(function(acumulador, valorAtual) {
   return (
     acumulador + 
       `INSERT INTO DETALHES ( CODIGO, ESTADO_DE_CONSERVACAO, SITUACAO, UNIDADE, COLECAO, TIPOLOGIA ) 
